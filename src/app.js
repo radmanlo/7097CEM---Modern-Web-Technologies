@@ -12,7 +12,7 @@ const port = process.env.NODE_LOCAL_PORT;
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-app.use('/api/user/', authRoutes);
+app.use('/auth', authRoutes);
 
 app.get('/', (req, res) => {
   res.send('Hello World!')

@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora&display=swap');
+
+body {
+    background-image: url('./img/piotr-miazga-WBX-ZLr8P7I-unsplash.jpg');
+    background-size: cover; 
+    background-position: center; 
+    font-family: 'Lora', serif;
+}
+
+header {
+    display: flex;
+    justify-content: center; 
+    height: 140px; 
+}
+
+footer {
+    display: flex;
+    justify-content: center; 
+    font-family: 'Lora', serif;
+    /* height: 80px;  */
+    margin-top: 120px ;
+    /* background-color: #91909049; */
+}
+
+p{
+    display: flex;
+    justify-content: center; 
+    flex-direction: column-reverse;
+}
+
+h1 {
+    font-family: 'Lora', serif;
+    color: #333; /* Text color */
+    font-size: 3rem; 
+    
+}
+
+.container {
+    width: 400px; 
+    margin: 0px auto; 
+    padding: 50px; 
+    border: 1px solid #919090;
+    border-radius: 5px;
+    background-color: #d4d1d128;
+}
+
+#loginForm {
+    display: flex; 
+    flex-direction: column;
+}
+
+.input-group {
+    margin-bottom: 15px; 
+}
+
+label {
+    display: block; 
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 96%; 
+    padding: 8px; 
+    border: 1px solid #4c4c4c; 
+    border-radius: 3px; 
+    background-color: #e0dcdc87;
+}
+
+/* Style for the login button */
+button[type="submit"] {
+    width: 100%; /* Make button full-width */
+    padding: 10px; /* Add padding for spacing */
+    background-color: #7c7c7c7c; /* Set background color */
+    color: #fff; /* Set text color */
+    border: none; /* Remove border */
+    border-radius: 3px; /* Add border-radius for rounded corners */
+    cursor: pointer; /* Add cursor pointer on hover */
+}
+
+/* Hover effect for the login button */
+button[type="submit"]:hover {
+    background-color: #4f4e4e90; /* Darker background color on hover */
+}
+
+
+#slidingElement {
+    width: 200px;
+    height: 100px;
+    background-color: #444444;
+    transition: transform 0.3s ease; /* Add transition for smooth movement */
+}
+
+.slideRight {
+    transform: translateX(100%); /* Slide to the right */
+}
+
+.slideLeft {
+    transform: translateX(0); /* Slide to the left */
+}
