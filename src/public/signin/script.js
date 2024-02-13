@@ -24,11 +24,11 @@ document.getElementById('signInButton').addEventListener('click', function() {
                 if (res.role === 'ADMIN')
                     location.href = '../admin/admin.html'
                 elseif (res.role === 'KITCHEN')
-                    
+                    location.href = '../kitchen/kitchen.html'
                 elseif (res.role === 'WELCOME')
-
+                    location.href = '../welcom'
                 elseif (res.role === 'SERVER')
-                location.href
+                    location.href = '../server/server.html'
             })
         } else {
             console.error('Sign-in failed');

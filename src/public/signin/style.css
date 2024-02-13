@@ -17,9 +17,7 @@ footer {
     display: flex;
     justify-content: center; 
     font-family: 'Lora', serif;
-    /* height: 80px;  */
     margin-top: 120px ;
-    /* background-color: #91909049; */
 }
 
 p{
@@ -30,7 +28,7 @@ p{
 
 h1 {
     font-family: 'Lora', serif;
-    color: #333; /* Text color */
+    color: #333; 
     font-size: 3rem; 
     
 }
@@ -67,34 +65,22 @@ input[type="password"] {
     background-color: #e0dcdc87;
 }
 
-/* Style for the login button */
 button[type="submit"] {
-    width: 100%; /* Make button full-width */
-    padding: 10px; /* Add padding for spacing */
-    background-color: #7c7c7c7c; /* Set background color */
-    color: #fff; /* Set text color */
-    border: none; /* Remove border */
-    border-radius: 3px; /* Add border-radius for rounded corners */
-    cursor: pointer; /* Add cursor pointer on hover */
+    width: 100%; 
+    padding: 10px; 
+    background-color: #7c7c7c7c; 
+    color: #fff; 
+    border: none; 
+    border-radius: 3px; 
+    cursor: pointer;
 }
 
-/* Hover effect for the login button */
 button[type="submit"]:hover {
-    background-color: #4f4e4e90; /* Darker background color on hover */
+    background-color: #4f4e4e90; 
 }
 
-
-#slidingElement {
-    width: 200px;
-    height: 100px;
-    background-color: #444444;
-    transition: transform 0.3s ease; /* Add transition for smooth movement */
-}
-
-.slideRight {
-    transform: translateX(100%); /* Slide to the right */
-}
-
-.slideLeft {
-    transform: translateX(0); /* Slide to the left */
+.signup-text {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
 }
