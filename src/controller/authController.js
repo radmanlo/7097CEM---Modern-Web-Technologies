@@ -11,8 +11,10 @@ async function signUp(req, res) {
 
         // check whether email exist or not 
         const user = await userSchema.findOne({ email: email});
-        if (user)
+        if (user){
             res.status(400).json({error:"email already registered"});
+            return;
+        }
 
         // save intot the database
         const newUser = new userSchema({ name, email, password});
@@ -27,7 +29,13 @@ async function signUp(req, res) {
         }).json({email: newUser.email});
 
     } catch (error) {
-        res.status(500).json({ error: error, message: req.body });
+        if (error.name === 'ValidationError') {
+            return res.status(400).json({ error: error.message });
+        } else if (error.code === 11000) {
+            return res.status(409).json({ error: error.message });
+        }else{
+            res.status(500).json({ error: error.message });
+        }
     }
 }
 
@@ -39,12 +47,19 @@ async function signIn(req, res) {
         const user = await userSchema.findOne({ email: email});
         if (!user) {
             res.status(401).json({ error: 'Invalid credentials' });
+            return
+        }
+
+        if (user.role == undefined) {
+            res.status(400).json({ error: 'Role not specified' });
+            return;
         }
 
         // password check
         const isPasswordMatch = await bcrypt.compare(password, user.password);
         if (!isPasswordMatch) {
             res.status(401).json({ error: 'Invalid credentials' });
+            return;
         }
 
         // Create and sign the JWT token
@@ -56,7 +71,13 @@ async function signIn(req, res) {
         }).json({email: user.email, role: user.role});
 
     } catch (error) {
-        res.status(500).json({ error: error });
+        if (error.name === 'ValidationError') {
+            return res.status(400).json({ error: error.message });
+        } else if (error.code === 11000) {
+            return res.status(409).json({ error: error.message });
+        }else{
+            res.status(500).json({ error: error.message });
+        }
     }
 }
 
@@ -84,10 +105,10 @@ async function getUser(token) {
 
         // Return the email and role
         return { name: user.name, email: user.email, role: user.role };
+
     } catch (error) {
-        // Handle errors
         console.error('Error:', error.message);
-        throw error; // Rethrow the error for the caller to handle
+        throw error; 
     }
 }
 

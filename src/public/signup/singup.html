@@ -4,15 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="signupStyle.css">
 </head>
 <body>
 
     <header><h1>Order System</h1> </header>
+    
     <div class="container">
         <form id="loginForm">
             <div class="input-group">
                 <h2>Sign Up</h2>
+                <div id="notification" class="notification" >
+                    <p>Your account is created. Please tell the manager to accept your account.</p>
+                </div>
                 <label for="name">Firstname Lastname</label>
                 <input type="text" id="name" name="name" placeholder="Enter firstname lastname" required>
             </div>
@@ -27,17 +31,21 @@
             <div class="input-group">
                 <label for="repassword">Repeat Password</label>
                 <input type="password" id="repassword" name="repassword" placeholder="Enter password again" required>
+                <div id="passwordError" style="display:none; color:red;">Passwords do not match</div>
             </div>
             <button id='signInButton' type="submit">Login</button>
-            <p class="signup-text">You have aleady an account? <a href="../signin/signin.html">Sign in</a></p>
+            <p id="account" class="signup-text">You have aleady an account? <a href="../signin/signin.html">Sign in</a></p>
+            <div class = "email-error" id="emailError" style="display: none; color:red;">Your email address already registered. Please <a href="../signin/signin.html">Sign in</a> </div>
         </form>
     </div>
 
     <footer>
         <p><small>&copy; 2024 Your Company. All rights reserved. | Designed by Radman</small></p>
     </footer>
+
     
     
-    <script src="script.js"></script>
+    
+    <script src="signupScript.js"></script>
 </body>
 </html>
