@@ -12,7 +12,7 @@ async function signUp(req, res) {
         // check whether email exist or not 
         const user = await userSchema.findOne({ email: email});
         if (user){
-            res.status(400).json({error:"email already registered"});
+            res.status(409).json({error:"email already registered"});
             return;
         }
 
@@ -32,7 +32,7 @@ async function signUp(req, res) {
         if (error.name === 'ValidationError') {
             return res.status(400).json({ error: error.message });
         } else if (error.code === 11000) {
-            return res.status(409).json({ error: error.message });
+            return res.status(404).json({ error: error.message });
         }else{
             res.status(500).json({ error: error.message });
         }

@@ -39,7 +39,7 @@ h1 {
     padding: 50px; 
     border: 1px solid #919090;
     border-radius: 5px;
-    background-color: #d4d1d128;
+    background-color: #d4d1d15c;
 }
 
 #loginForm {
@@ -76,7 +76,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    background-color: #4f4e4e90; 
+    background-color: #4f4e4ea4; 
 }
 
 .signup-text {
@@ -87,9 +87,33 @@ button[type="submit"]:hover {
 
 .notification {
     text-align: center;
-    margin-top: 20px;
-    background-color: #f8d7da;
-    color: #721c24;
+    margin: 10px;
+    background-color: #d8f8d7;
+    color: #2a721c;
+    border: 1px solid #cbf5c6;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.notification p {
+    display: block;
+}
+
+.email-error{
+    text-align: center;
+    margin: 20px;
+    background-color: #f8d7d7;
+    color: #721c1c;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.inputError{
+    text-align: center;
+    margin: 20px;
+    background-color: #f8d7d7;
+    color: #721c1c;
     border: 1px solid #f5c6cb;
     border-radius: 5px;
     padding: 10px;
