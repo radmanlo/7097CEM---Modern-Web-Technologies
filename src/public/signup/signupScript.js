@@ -48,7 +48,7 @@ document.getElementById('signInButton').addEventListener('click', function() {
             document.getElementById('passwordError').style.display = 'none';
             document.getElementById('account').style.display = 'none';
         }  
-        else if (response.status == 400 || response.status == 40){
+        else if (response.status == 400 || response.status == 404){
             document.getElementById('notification').style.display = 'none';
             document.getElementById('emailError').style.display = 'none';
             document.getElementById('account').style.display = 'block';

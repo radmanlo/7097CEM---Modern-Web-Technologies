@@ -84,3 +84,23 @@ button[type="submit"]:hover {
     justify-content: space-between;
     flex-direction: row;
 }
+
+.inputError{
+    text-align: center;
+    margin: 20px;
+    background-color: #f8d7d7;
+    color: #721c1c;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.acceptError{
+    text-align: center;
+    margin: 20px;
+    background-color: #f8d7d7;
+    color: #721c1c;
+    border: 1px solid #f5c6cb;
+    border-radius: 5px;
+    padding: 10px;
+}

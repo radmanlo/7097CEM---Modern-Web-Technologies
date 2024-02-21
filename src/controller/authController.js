@@ -46,19 +46,21 @@ async function signIn(req, res) {
         // check whether user exist or not
         const user = await userSchema.findOne({ email: email});
         if (!user) {
-            res.status(401).json({ error: 'Invalid credentials' });
+            res.status(409).json({ error: 'Invalid credentials' });
             return
-        }
-
-        if (user.role == undefined) {
-            res.status(400).json({ error: 'Role not specified' });
-            return;
         }
 
         // password check
         const isPasswordMatch = await bcrypt.compare(password, user.password);
+
         if (!isPasswordMatch) {
-            res.status(401).json({ error: 'Invalid credentials' });
+            res.status(409).json({ error: 'Invalid credentials' });
+            return;
+        }
+
+        // check it has rol or not
+        if (user.role == undefined) {
+            res.status(400).json({ error: 'Role not specified' });
             return;
         }
 

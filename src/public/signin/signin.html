@@ -12,16 +12,33 @@
     <div class="container">
         <form id="loginForm">
             <div class="input-group">
+
                 <h2>Sign In</h2>
+
+                <div class = "inputError" id="inputError" style="display: none; color:red;">
+                    <p>Email or password is worng. Please try again!</p>
+                </div>
+
+                <div class = "acceptError" id="acceptError" style="display: none; color:red;">
+                    <p>Your account is under the considration. Please wait until manage accept your account.</p>
+                </div>
+
                 <label for="email">Emali Address</label>
                 <input type="text" id="email" name="Emali Address" placeholder="Enter Emali Address", required>
+
             </div>
+
             <div class="input-group">
+
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" placeholder="Enter password" required>
+
             </div>
+
             <button id='signInButton' type="submit">Login</button>
+
             <p class="signup-text">Don't have an account? <a href="../signup/singup.html">Sign up</a></p>
+
         </form>
     </div>
 
