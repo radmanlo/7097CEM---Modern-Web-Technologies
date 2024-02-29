@@ -47,10 +47,12 @@ document.getElementById('signInButton').addEventListener('click', function() {
             document.getElementById('notification').style.display = 'none';
             document.getElementById('passwordError').style.display = 'none';
             document.getElementById('account').style.display = 'none';
+            document.getElementById('inputError').style.display = 'none';
         }  
         else if (response.status == 400 || response.status == 404){
             document.getElementById('notification').style.display = 'none';
             document.getElementById('emailError').style.display = 'none';
+            document.getElementById('passwordError').style.display = 'none';
             document.getElementById('account').style.display = 'block';
             document.getElementById('inputError').style.display = 'block';
         }

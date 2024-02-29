@@ -11,7 +11,7 @@ async function createTable(req, res) {
 
         // Check the user who is calling is admin 
         if(user.role != "ADMIN"){
-            res.status(404).json({ error: 'For Deleting a table you should be admin' }); 
+            res.status(404).json({ error: 'For Creating a table you should be admin' }); 
             return;
         }
 

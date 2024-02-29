@@ -70,7 +70,8 @@ async function signIn(req, res) {
         // response
         res.status(200).cookie("token", token, {
             httpOnly: true,
-        }).json({email: user.email, role: user.role});
+        }).cookie("user_name", user.name)
+            .json({name: user.name, role: user.role});
 
     } catch (error) {
         if (error.name === 'ValidationError') {

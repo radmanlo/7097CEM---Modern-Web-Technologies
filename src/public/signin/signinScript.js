@@ -20,15 +20,20 @@ document.getElementById('signInButton').addEventListener('click', function() {
     })
     .then(response => {
         if (response.status == 200) {
-            respond.json().then((res)=>{
+            response.json().then((res)=>{
+
+                let nextPage;
+                
                 if (res.role === 'ADMIN')
-                    location.href = '../admin/admin.html'
-                elseif (res.role === 'KITCHEN')
-                    location.href = '../kitchen/kitchen.html'
-                elseif (res.role === 'WELCOME')
-                    location.href = '../welcom'
-                elseif (res.role === 'SERVER')
-                    location.href = '../server/server.html'
+                    nextPage = '../admin/admin.html';
+                else if (res.role === 'KITCHEN')
+                    nextPage = '../kitchen/kitchen.html';
+                else if (res.role === 'WELCOME')
+                    nextPage = '../welcomer/welcomer.html';
+                else if (res.role === 'SERVER')
+                    nextPage = '../server/server.html';
+
+                location.href = nextPage;
             })
         } 
         else if (response.status == 409) {
@@ -40,7 +45,8 @@ document.getElementById('signInButton').addEventListener('click', function() {
             document.getElementById("inputError").style.display = "none";
         }
         else{
-            alert("Internal Server Error. Please try again later");  
+            alert("Internal Server Error. Please try again later" );  
+            alert(response.status)
         }
     })
     .catch(error => {
