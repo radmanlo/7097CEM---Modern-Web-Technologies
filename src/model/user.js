@@ -7,8 +7,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         validate: { 
-            validator: validator.isAlpha,
-            message: '{VALUE} is not a name'
+          validator: function(value) {
+            return /^[A-Za-z\s]+$/.test(value);
+          },
+          message: '{VALUE} is not a valid name'
         }
     },
     email: {

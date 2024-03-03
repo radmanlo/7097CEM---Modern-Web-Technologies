@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 
 module.exports = {
   /**
-   *
    * @param uri
    * the uri of the database which is static
    * and stored in the .env file

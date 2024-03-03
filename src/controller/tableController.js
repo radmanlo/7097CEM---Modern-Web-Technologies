@@ -1,4 +1,4 @@
-const tableSchema = require("../model/tableSchema");
+const tableSchema = require("../model/table");
 const {getUser} = require("./authController");
 
 async function createTable(req, res) {
