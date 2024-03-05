@@ -12,14 +12,10 @@ const tableSchema = new mongoose.Schema({
         default: 'EMPTY',
         enum: ['EMPTY', 'RESERVE', 'ORDERING', 'WAITING_FOR_FOOD', 'DELIVERED']
     },
-    // reserveInfo:{
-    //     name: {
-    //         type: String
-    //     },
-    //     date: {
-    //         type: Date
-    //     }
-    // }
+    capacity:{
+        type: Number,
+        required: true,
+    },
 })
 
 module.exports = mongoose.model('tableSchema', tableSchema);

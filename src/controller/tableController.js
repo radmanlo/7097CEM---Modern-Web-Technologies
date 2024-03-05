@@ -16,13 +16,14 @@ async function createTable(req, res) {
         }
 
         const number = req.query.number;
+        const capacity = req.query.capacity;
         
         // Create new table
-        const newTable = new tableSchema({number});
+        const newTable = new tableSchema({number, capacity});
         await newTable.save();
 
         // Return 200 status code
-        res.status(200).json({message: "Table created!"});
+        res.status(201).json({message: "Table created!"});
 
     } catch (error) {
         if (error.message === 'Invalid token: Email or expiration time not found in token' ||
@@ -220,10 +221,13 @@ async function deleteTable(req, res){
         const number = req.query.number;
 
         // Delete the table
-        await tableSchema.deleteOne({number: number});
+        const result = await tableSchema.deleteOne({number: number});
 
-        // Return 200 status code
-        res.status(200).json({message: "Table deleted successfully"});
+        if (result.deletedCount === 1) {
+            res.status(200).json({message: "Table deleted successfully"});
+        } 
+
+        res.status(400).json({error: "Table not found!"});
 
     } catch (error) {
         if (error.message === 'Invalid token: Email or expiration time not found in token' ||
@@ -247,4 +251,4 @@ module.exports = {
     changeStateTable,
     makeTableEmpty,
     deleteTable
-}
+};
