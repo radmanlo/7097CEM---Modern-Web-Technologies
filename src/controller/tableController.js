@@ -225,6 +225,7 @@ async function deleteTable(req, res){
 
         if (result.deletedCount === 1) {
             res.status(200).json({message: "Table deleted successfully"});
+            return;
         } 
 
         res.status(400).json({error: "Table not found!"});
@@ -240,7 +241,7 @@ async function deleteTable(req, res){
         } else if (error.name === 'MongoError' || error.code === 11000) {
             return res.status(409).json({ error: error.message });
         } else {
-            res.status(500).json({ error: error.message}); 
+            return res.status(500).json({ error: error.message}); 
         }
     }
 }

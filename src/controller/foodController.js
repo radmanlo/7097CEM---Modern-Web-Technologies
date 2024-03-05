@@ -4,27 +4,36 @@ const {getUser} = require("./authController");
 
 async function createFood (req, res){
 
-    try{
-
+    try {
         // Get token 
         const token = req.cookies.token;
         const user = await getUser(token);
-
-        // Check the user who is calling is admin 
-        if(user.role != "ADMIN"){
-            res.status(404).json({ error: 'For Creating a food you should be admin' }); 
-            return;
+    
+        // Check if the user who is calling is an admin 
+        if (user.role !== "ADMIN") {
+            return res.status(404).json({ error: 'For Creating a food you should be admin' }); 
         }
-
+    
         const { category, name, ingredients } = req.body;
-
-        const newFood = new foodSchema({category, name, ingredients});
-        newFood.save();
-
-        res.status(201).json({newFood});
-
-    } catch (error){
-        console.error(error)
+    
+        // Creating a new food instance
+        const newFood = new foodSchema({ category, name, ingredients });
+    
+        // Saving the new food item
+        await newFood.save();
+    
+        res.status(201).json({ newFood });
+    } catch (error) {
+        if (error.message === 'Invalid token: Email or expiration time not found in token' ||
+            error.message === 'Token has expired') {
+            return res.status(401).json({ error: error.message }); 
+        } else if (error.name === 'ValidationError') {
+            return res.status(400).json({ error: error.message });
+        } else if (error.code === 11000) {
+            return res.status(409).json({ error: error.message });
+        } else {
+            return res.status(500).json({ error: error.message }); 
+        }
     }
 }
 
@@ -107,7 +116,7 @@ async function updateFood (req, res){
 
         // Check the user who is calling is admin 
         if(user.role != "ADMIN"){
-            res.status(404).json({ error: 'For Creating a food you should be admin' }); 
+            res.status(404).json({ error: 'For updating a food you should be admin' }); 
             return;
         }
 
@@ -154,7 +163,7 @@ async function deleteFood (req, res){
 
         // Check the user who is calling is admin 
         if(user.role != "ADMIN"){
-            res.status(404).json({ error: 'For Creating a food you should be admin' }); 
+            res.status(404).json({ error: 'For deleting a food you should be admin' }); 
             return;
         }
 

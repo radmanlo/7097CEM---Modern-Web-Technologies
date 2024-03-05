@@ -3,7 +3,6 @@ const { MongoMemoryServer } = require('mongodb-memory-server');
 const request = require('supertest');
 const app = require('../app');
 const userSchema = require('../model/user');
-const tableSchema = require("../model/table");
 
 // Create a new MongoMemoryServer
 const mongod = new MongoMemoryServer();
@@ -222,9 +221,5 @@ describe('Table APIs', () => {
     
         });
     })
-    
-  
-    
-
 
 });

@@ -4,7 +4,7 @@ const foodSchema = new mongoose.Schema({
     category:{
         type: String,
         enum: ['BEVERAGE', 'APPETIZER', 'FOOD', 'DESSERT'],
-        require: true
+        required: true,
     }, 
     name: {
         type: String,
