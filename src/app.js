@@ -6,7 +6,8 @@ const db = require("./config/db")
 const authRoutes = require('./route/authRouter');
 const tableRoutes = require('./route/tableRouter');
 const adminRoutes = require('./route/adminRouter');
-const foodRoutes = require ('./route/foodRouter')
+const foodRoutes = require ('./route/foodRouter');
+const orderRoutes = require('./route/orderRouter')
 
 const app = express()
 const cookieParser = require('cookie-parser');
@@ -22,6 +23,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/table', tableRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/food', foodRoutes);
+app.use('/api/order', orderRoutes);
+
 app.use(express.static(__dirname + '/public'));
 
 app.get('/', (req, res) => {

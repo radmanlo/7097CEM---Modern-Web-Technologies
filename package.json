@@ -5,7 +5,11 @@
   "main": "./src/app.js",
   "scripts": {
     "start": "nodemon ./src/app.js",
-    "test": "NODE_ENV=test jest"
+    "test": "NODE_ENV=test jest",
+    "test_auth": "NODE_ENV=test jest ./src/__test__/auth.test.js",
+    "test_food": "NODE_ENV=test jest ./src/__test__/food.test.js",
+    "test_order": "NODE_ENV=test jest ./src/__test__/order.test.js",
+    "test_table": "NODE_ENV=test jest ./src/__test__/table.test.js"
   },
   "author": "",
   "license": "ISC",
