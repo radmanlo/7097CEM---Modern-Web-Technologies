@@ -1,0 +1,142 @@
+body {
+    background-image: url('./img/piotr-miazga-WBX-ZLr8P7I-unsplash.jpg');
+    background-size: cover; 
+    background-position: center; 
+    font-family: 'Lora', serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    background-color: #d4d1d15c;
+    border: 1px solid #919090;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.welcomeH1 {
+    margin-top: 50px; 
+    margin-bottom: 50px; 
+    font-family: 'Lora', serif;
+    color: #333; 
+    font-size: 3rem;
+}
+
+.table-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.ready-orders,
+.waiting-orders,
+.delivered-orders {
+    flex-basis: 40%;
+}
+
+.orders {
+    border: 1px solid #000000;
+    padding: 10px;
+    border-radius: 0;
+    margin-bottom: 20px; 
+    margin: 10px;
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+footer {
+    text-align: center; 
+    font-family: 'Lora', serif;
+    margin-top: 50px ; 
+    margin-bottom: 30px;
+}
+
+.food-container {
+    display: none;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.left-part {
+    display: flex;
+    align-items: flex-start;
+    border: 1px solid #9d9d9d;
+    margin-right: 20px;
+}
+
+.expand-btn {
+    padding: 10px 30px;
+    margin: 5px;
+    margin-right: 10px;
+    background-color: #ddd;
+    border: none;
+    cursor: pointer;
+}
+
+.right-part {
+    width: 60%;
+}
+
+.right-part h2 {
+    font-size: 1.5rem;
+}
+
+#order {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    height: 200px;
+    overflow-y: auto;
+}
+
+.table {
+    border: 1px solid #9d9d9d;
+    background-color: #d5d5d5;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: pointer; 
+}
+
+.table:hover {
+    background-color: #f0f0f0; 
+}
+
+.table-number {
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.orderBtns{
+    display: flex;
+    justify-content: center;
+}
+
+#makeOrderBtn {
+    margin-top: 20px;
+    margin-right: 10px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+#makeOrderBtn:hover {
+    background-color: #0056b3;
+}
+
+#cancelBtn {
+    margin-top: 20px;
+    padding: 10px 40px;
+    background-color: #ff0000;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+#cancelBtn:hover {
+    background-color: #b30000;
+}

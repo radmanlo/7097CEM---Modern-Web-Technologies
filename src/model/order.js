@@ -9,6 +9,7 @@ const orderSchema = new mongoose.Schema({
         foodId: {
             type: mongoose.Schema.Types.ObjectId,
             default: mongoose.Types.ObjectId,
+            ref: 'foodSchema',
             required: true,
         },
         count: {
@@ -19,7 +20,7 @@ const orderSchema = new mongoose.Schema({
     state:{
         type: String,
         default: 'PENDING',
-        enum: ['PENDING', 'PREPERING', 'READY', 'CANCELED']
+        enum: ['PENDING', 'PREPARING', 'READY', 'CANCELED']
     },
     created_at:{
         type: Date,

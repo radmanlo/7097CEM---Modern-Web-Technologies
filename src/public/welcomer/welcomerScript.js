@@ -30,6 +30,7 @@ function createEmptyTableElement(table) {
 
     tableDiv.innerHTML = `
         <span>Table ${table.number}</span>
+        <span>Capacity ${table.capacity}</span>
         <button class="occupy-button">Occupy</button>
     `;
 
@@ -72,6 +73,7 @@ function createOccupiedTableElement(table) {
     tableDiv.classList.add('table');
     tableDiv.innerHTML = `
         <span>Table ${table.number}</span>
+        <span>Capacity ${table.capacity}</span>
         <button class="empty-button">Empty</button>
     `;
 

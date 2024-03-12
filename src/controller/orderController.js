@@ -1,6 +1,7 @@
 const order = require("../model/order");
 const orderSchema = require("../model/order");
 const {getUser} = require("./authController");
+const Food = require('../model/food');
 
 async function createOrder (req, res){
 
@@ -82,7 +83,7 @@ async function getOrderByTableNumber (req, res){
     
 }
 
-async function getOrderByState (req, res){
+async function getOrderKitchen (req, res){
     try{
 
         // Get token 
@@ -100,20 +101,36 @@ async function getOrderByState (req, res){
         const today = new Date();
         today.setHours(0, 0, 0, 0); 
 
+        // const ordersToday = await orderSchema.find({
+        //     created_at: { $gte: today }
+        // }).sort({ created_at: 1 }).exec();
+
         const ordersToday = await orderSchema.find({
-
-            $and: [
-                { state },
-                { created_at: { $gte: today } }
-            ]
-
+            created_at: { $gte: today }
+        }).populate({
+            path: 'order_items.foodId',
+            select: 'name' 
         }).sort({ created_at: 1 }).exec();
+
 
         if (!ordersToday) {
             return res.status(404).json({ error: 'No orders found for the specified state.' });
         }
 
-        return res.status(200).json(ordersToday);
+        const orders = ordersToday.map(order => {
+            return {
+                tableNumber: order.table_number,
+                orderId: order._id, 
+                orderItems: order.order_items.map(item => ({
+                    foodName: item.foodId.name,
+                    count: item.count
+                })),
+                state: order.state,
+                createdAt: order.created_at
+            };
+        });
+
+        return res.status(200).json(orders);
 
     }catch (error) {
         if (error.message === 'Invalid token: Email or expiration time not found in token' ||
@@ -154,11 +171,11 @@ async function updateState (req, res){
         }
 
         if(order.state == 'PENDING'){
-            order.state = 'PREPERING'
+            order.state = 'PREPARING'
             const updatedOrder = await order.save();
             return  res.status(200).json({ updatedOrder });
         }
-        else if (order.state == 'PREPERING'){
+        else if (order.state == 'PREPARING'){
             order.state = 'READY'
             const updatedOrder = await order.save();
             return  res.status(200).json({ updatedOrder });
@@ -190,8 +207,8 @@ async function cancelOrder(req, res){
         const user = await getUser(token);
 
         // Check the user who is calling is admin 
-        if(user.role != "SERVER"){
-            res.status(404).json({ error: 'For getting based on state you should be server' }); 
+        if(user.role != "SERVER" || user.role != "KITCHEN"){
+            res.status(404).json({ error: 'For getting based on state you should be server or kitchen staff' }); 
             return;
         }
 
@@ -231,7 +248,7 @@ async function cancelOrder(req, res){
 module.exports = {
     createOrder,
     getOrderByTableNumber,
-    getOrderByState,
+    getOrderKitchen,
     updateState,
     cancelOrder
 };

@@ -3,9 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="kitchenStyle.css">
+    <title>Kitchen</title>
 </head>
 <body>
-    <h1>KITCHEN PAGE</h1>
+    <h1 id="welcomeHeading" class="welcomeH1"></h1>
+    <div class="container">
+        <div class="order-container">
+            <div class="pending-orders">
+                <h2>Orders to Review</h2>
+                <div id="pendingOrders" class="orders"></div>
+            </div>
+            <div class="preparing-orders">
+                <h2>Preparing Food</h2>
+                <div id="preparingOrders" class="orders"></div>
+            </div>
+            <div class="ready-orders">
+                <h2>Ready Orders</h2>
+                <div id="readyOrders" class="orders"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p><small>&copy; 2024 Your Company. All rights reserved. | Designed by Radman</small></p>
+    </footer>
+
+    <script src="kitchenScript.js"></script>
 </body>
 </html>

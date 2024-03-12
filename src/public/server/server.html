@@ -3,9 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="serverStyle.css">
+    <title>Server</title>
 </head>
 <body>
-    <h1>SERVER PAGE</h1>
+    <h1 id="welcomeHeading" class="welcomeH1"></h1>
+
+    <div class="container">
+
+        <div class="table-container" id="tableContainer">
+            <div class="ready-orders">
+                <h2>Ready to Order</h2>
+                <div id="readyOrders" class="orders"></div>
+            </div>
+            <div class="waiting-orders">
+                <h2>Waiting for food</h2>
+                <div id="waitingOrders" class="orders"></div>
+            </div>
+            <div class="delivered-orders">
+                <h2>Delivered</h2>
+                <div id="deliveredOrders" class="orders"></div>
+            </div>
+        </div>
+
+
+        <div class="food-container" id="orderFood">
+            <!-- Left part -->
+            <div class="left-part">
+                <button class="expand-btn" id="beverageBtn">Beverage</button>
+                <button class="expand-btn" id="appetizerBtn">Appetizer</button>
+                <button class="expand-btn" id="foodBtn">Food</button>
+                <button class="expand-btn" id="dessertBtn">Dessert</button>
+            </div>
+            <!-- Right part -->
+            <div class="right-part">
+                <h2>Orders</h2>
+                <div id="order"></div>
+                <div class="orderBtns">
+                    <button id="makeOrderBtn">Make Order</button>
+                    <button id="cancelBtn">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <footer>
+        <p><small>&copy; 2024 Your Company. All rights reserved. | Designed by Radman</small></p>
+    </footer>
+
+    <script src="serverScript.js"></script>
 </body>
 </html>
