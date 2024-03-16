@@ -81,7 +81,7 @@ function createPendingOrdersElement(order) {
 
                 const pendingOrdersElement = document.getElementById('pendingOrders');
                 const preparingOrdersElement = document.getElementById('preparingOrders');
-                const readyOrdersElement = document.getElementById('readyOrdersOrders');
+                const readyOrdersElement = document.getElementById('readyOrders');
 
                 pendingOrdersElement.innerHTML = '';
                 preparingOrdersElement.innerHTML = '';
@@ -165,7 +165,7 @@ function createPreparingOrdersElement(order) {
 
                 const pendingOrdersElement = document.getElementById('pendingOrders');
                 const preparingOrdersElement = document.getElementById('preparingOrders');
-                const readyOrdersElement = document.getElementById('readyOrdersOrders');
+                const readyOrdersElement = document.getElementById('readyOrders');
 
                 pendingOrdersElement.innerHTML = '';
                 preparingOrdersElement.innerHTML = '';

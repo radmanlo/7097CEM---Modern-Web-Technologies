@@ -34,6 +34,70 @@ body {
     flex-basis: 40%;
 }
 
+.waiting-orders .table{
+    background-color: rgb(148, 250, 134);
+}
+
+.table-order {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #f9f9f9;
+    flex-direction: column;
+    background-color: rgb(220, 162, 239);
+}
+
+/* Food name in the order */
+.foodName-ordered {
+    margin-right: 10px; 
+}
+
+.cancel-order-btn {
+    background-color: #f44336; 
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.cancel-order-btn:hover {
+    background-color: #d32f2f; /* Darker red on hover */
+}
+
+.deliver-order-btn {
+    background-color: #3936f4; /* Red color for cancel button */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-left: 45px;
+    margin-top: 5px;
+}
+
+.cancel-order-btn:hover {
+    background-color: #2f34d3; /* Darker red on hover */
+}
+
+#messageContainer {
+    background-color: #d8f8d7;
+    color: #2a721c;
+    border: 1px solid #cbf5c6;
+    border-radius: 5px;
+    padding: 10px; 
+    margin-top: 10px; 
+    text-align: center;
+    display: none; 
+    justify-content: center;
+}
+
+#messageContainer p {
+    margin: 0; 
+}
+
 .orders {
     border: 1px solid #000000;
     padding: 10px;
@@ -53,26 +117,66 @@ footer {
     margin-bottom: 30px;
 }
 
-.food-container {
+.order-container{
     display: none;
+}
+
+.order-container h1{
+    font-size: 1.8rem;
+}
+
+.food-container {
+    display: flex;
     justify-content: space-between;
     margin-top: 20px;
 }
 
 .left-part {
     display: flex;
-    align-items: flex-start;
+    flex-direction: column;
     border: 1px solid #9d9d9d;
     margin-right: 20px;
+    width: 100%;
+}
+
+.foods{
+    border: 1px solid #9d9d9d;
+    padding: 10px;
+    border-radius: 0;
+    margin-bottom: 20px; 
+    margin: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    height: 200px;
+    overflow-y: auto;
+    align-content: center
+}
+
+.food {
+    border: 1px solid #9d9d9d;
+    background-color: #d5d5d5;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.food:hover {
+    background-color: #f0f0f0; 
 }
 
 .expand-btn {
     padding: 10px 30px;
     margin: 5px;
-    margin-right: 10px;
+    margin-right: 5px;
     background-color: #ddd;
     border: none;
     cursor: pointer;
+}
+
+.expand-btn:hover{
+    background-color: #b1b1b1;
 }
 
 .right-part {
@@ -86,9 +190,43 @@ footer {
 #order {
     margin-top: 10px;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #9d9d9d;
     height: 200px;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+#order .food {
+    background-color: #eff9ea;
+    border-color: #5cff33;
+    display: flex;
+    margin: 5px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#order .food:hover {
+    background-color: #eeffea;
+}
+
+#order .food-name {
+    color: #05a300;
+    margin-right: auto; 
+}
+
+#order .count {
+    margin: 0 10px; 
+}
+
+#decrementBtn {
+    background-color: #ff6666;
+    margin-left: auto; 
+    padding: 3px 20px;
+}
+
+#decrementBtn:hover {
+    background-color: #ff5050; /* Adjusted button hover color */
 }
 
 .table {

@@ -11,6 +11,8 @@
 
     <div class="container">
 
+        <div class="message-container" id="messageContainer"></div>
+
         <div class="table-container" id="tableContainer">
             <div class="ready-orders">
                 <h2>Ready to Order</h2>
@@ -26,26 +28,30 @@
             </div>
         </div>
 
-
-        <div class="food-container" id="orderFood">
-            <!-- Left part -->
-            <div class="left-part">
-                <button class="expand-btn" id="beverageBtn">Beverage</button>
-                <button class="expand-btn" id="appetizerBtn">Appetizer</button>
-                <button class="expand-btn" id="foodBtn">Food</button>
-                <button class="expand-btn" id="dessertBtn">Dessert</button>
-            </div>
-            <!-- Right part -->
-            <div class="right-part">
-                <h2>Orders</h2>
-                <div id="order"></div>
-                <div class="orderBtns">
-                    <button id="makeOrderBtn">Make Order</button>
-                    <button id="cancelBtn">Cancel</button>
+        <div class="order-container" id="orderContainer">
+            <h1 id="tableHead"></h1>
+            <div class="food-container" id="orderFood">
+                <!-- Left part -->
+                <div class="left-part">
+                    <div class="foodBtns">
+                        <button class="expand-btn" id="beverageBtn">Beverage</button>
+                        <button class="expand-btn" id="appetizerBtn">Appetizer</button>
+                        <button class="expand-btn" id="foodBtn">Food</button>
+                        <button class="expand-btn" id="dessertBtn">Dessert</button>
+                    </div>
+                    <div class="foods" id="foodsDiv"></div>
+                </div>
+                <!-- Right part -->
+                <div class="right-part">
+                    <h2>Orders</h2>
+                    <div id="order"></div>
+                    <div class="orderBtns">
+                        <button id="makeOrderBtn">Make Order</button>
+                        <button id="cancelBtn">Cancel</button>
+                    </div>
                 </div>
             </div>
         </div>
-
     </div>
 
 

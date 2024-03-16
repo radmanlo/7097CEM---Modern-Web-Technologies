@@ -62,6 +62,42 @@ async function getAllFoods (req, res){
     
 }
 
+async function getFoodByCategory (req, res){
+
+    try{
+
+        // Get token 
+        const token = req.cookies.token;
+        const user = await getUser(token);
+
+        // Check if the user who is calling is an admin 
+        if (user.role !== "SERVER") {
+            return res.status(404).json({ error: 'Only Servers can call this API' }); 
+        }
+
+        const categoryIn = req.query.category;
+        
+        // find the table
+        const foods = await foodSchema.find({category: categoryIn});
+
+        // Return 200 status code
+        res.status(200).json({foods});
+
+    }catch (error) {
+        if (error.message === 'Invalid token: Email or expiration time not found in token' ||
+            error.message === 'Token has expired') {
+            res.status(401).json({ error: error.message }); 
+        } else if (error.name === 'ValidationError') {
+            return res.status(400).json({ error: error.message });
+        } else if (error.code === 11000) {
+            return res.status(409).json({ error: error.message });
+        } else {
+            res.status(500).json({ error: error.message}); 
+        }
+    }
+    
+}
+
 async function changeState (req, res){
 
     try{
@@ -200,6 +236,7 @@ async function deleteFood (req, res){
 module.exports = {
     createFood,
     getAllFoods,
+    getFoodByCategory,
     changeState,
     updateFood,
     deleteFood

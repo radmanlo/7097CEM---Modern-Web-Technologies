@@ -56,7 +56,12 @@ async function getOrderByTableNumber (req, res){
 
         const { tableNumber } = req.query;
 
-        const mostRecentOrder = await orderSchema.findOne({ table_number: tableNumber})
+        const mostRecentOrder = await orderSchema
+            .findOne({ table_number: tableNumber})
+            .populate({
+                path: 'order_items.foodId',
+                select: 'name' 
+            })
             .sort({ created_at: -1 }) 
             .exec();
 
@@ -207,8 +212,9 @@ async function cancelOrder(req, res){
         const user = await getUser(token);
 
         // Check the user who is calling is admin 
-        if(user.role != "SERVER" || user.role != "KITCHEN"){
-            res.status(404).json({ error: 'For getting based on state you should be server or kitchen staff' }); 
+        if(user.role != "SERVER" && user.role != "KITCHEN"){
+            
+            res.status(404).json({ error: `For canceling order on state you should be server or kitchen staff ${user.role}` }); 
             return;
         }
 

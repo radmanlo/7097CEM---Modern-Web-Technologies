@@ -10,7 +10,7 @@ async function userRoleChanger (req, res){
 
         // Check admin user is calling api 
         if(user.role != "ADMIN"){
-            res.status(404).json({ error: 'For Creating a table you should be admin' }); 
+            res.status(404).json({ error: 'For changing user roll you should be admin' }); 
             return;
         }
 
@@ -43,6 +43,41 @@ async function userRoleChanger (req, res){
     }  
 }
 
+async function getNoneRollUsers(req, res){
+
+    try{
+
+         // Get token 
+         const token = req.cookies.token;
+         const user = await getUser(token);
+ 
+         // Check admin user is calling api 
+         if(user.role != "ADMIN"){
+             res.status(404).json({ error: 'For getting users you should be admin' }); 
+             return;
+         }
+
+        const found_user = await userSchema.find({ role: null});
+        
+        res.status(200).json(found_user);
+         
+
+    } catch (error) {
+        if (error.message === 'Invalid token: Email or expiration time not found in token' ||
+            error.message === 'Token has expired') {
+            res.status(401).json({ error: error.message }); 
+        } else if (error.name === 'ValidationError') {
+            return res.status(400).json({ error: error.message });
+        } else if (error.code === 11000) {
+            return res.status(409).json({ error: error.message });
+        } else {
+            res.status(500).json({ error: error.message}); 
+        }
+    }  
+
+}
+
 module.exports = {
-    userRoleChanger
+    userRoleChanger,
+    getNoneRollUsers
 };

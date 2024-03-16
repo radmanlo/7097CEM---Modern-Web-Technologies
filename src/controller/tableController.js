@@ -166,7 +166,7 @@ async function makeTableEmpty(req, res){
         const user = await getUser(token);
 
         // Check the user who is calling is welcome or admin
-        if(user.role != "WELCOME" ){
+        if(user.role != "WELCOME" && user.role != "SERVER"){
             res.status(404).json({ error: 'For emptying a table you should be Welcome or admin staff'}); 
             return;
         }
