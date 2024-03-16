@@ -236,14 +236,13 @@ describe("Order APIs", () => {
         });
     });
 
-    describe("Get orders by state!", () =>{
+    describe("Get orders by kitchen!", () =>{
         
-        test('Should get an order', async () => {
+        test('Should get orders', async () => {
 
             const response = await request(app)
-                .get('/api/order/get/state')
-                .set('Cookie', kitchenToken)
-                .query({state: "PENDING"});
+                .get('/api/order/get/kitchen')
+                .set('Cookie', kitchenToken);
 
             expect(response.statusCode).toBe(200);
             expect(response.body).toBeInstanceOf(Array);
@@ -255,27 +254,26 @@ describe("Order APIs", () => {
         test('Only kitchen staff have access', async () => {
 
             const response = await request(app)
-                .get('/api/order/get/state')
-                .set('Cookie', serverToken)
-                .query({state: "PENDING"});
+                .get('/api/order/get/kitchen')
+                .set('Cookie', serverToken);
 
             expect(response.statusCode).toBe(404);
             expect(response.body).toHaveProperty("error", "For getting based on state you should be kitchen");
 
         });
 
-        test('Should return empty array for unspecified state', async () => {
+        // test('Should return empty array for unspecified state', async () => {
 
-            const response = await request(app)
-                .get('/api/order/get/state')
-                .set('Cookie', kitchenToken)
-                .query({state: "TEST"});
+        //     const response = await request(app)
+        //         .get('/api/order/get/state')
+        //         .set('Cookie', kitchenToken)
+        //         .query({state: "TEST"});
 
-            expect(response.statusCode).toBe(200);
-            expect(response.body).toBeInstanceOf(Array);
-            expect(response.body.length).toBe(0);
+        //     expect(response.statusCode).toBe(200);
+        //     expect(response.body).toBeInstanceOf(Array);
+        //     expect(response.body.length).toBe(0);
 
-        });
+        // });
 
     });
 
@@ -290,7 +288,7 @@ describe("Order APIs", () => {
 
             expect(response.statusCode).toBe(200);
             expect(response.body).toHaveProperty("updatedOrder");
-            expect(response.body["updatedOrder"]["state"]).toBe("PREPERING");
+            expect(response.body["updatedOrder"]["state"]).toBe("PREPARING");
 
         });
 
@@ -354,7 +352,7 @@ describe("Order APIs", () => {
                 .query({orderId: orderIdTest2});
 
             expect(response.statusCode).toBe(404);
-            expect(response.body).toHaveProperty("error", "For getting based on state you should be server");
+            expect(response.body).toHaveProperty("error", "For canceling order on state you should be server or kitchen staff WELCOME");
 
         });
 

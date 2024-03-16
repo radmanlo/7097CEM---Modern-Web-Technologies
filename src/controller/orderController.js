@@ -101,8 +101,6 @@ async function getOrderKitchen (req, res){
             return;
         }
 
-        const { state } = req.query;
-
         const today = new Date();
         today.setHours(0, 0, 0, 0); 
 

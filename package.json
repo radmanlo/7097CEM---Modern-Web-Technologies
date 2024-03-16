@@ -6,6 +6,7 @@
   "scripts": {
     "start": "nodemon ./src/app.js",
     "test": "NODE_ENV=test jest",
+    "test_admin": "NODE_ENV=test jest ./src/__test__/admin.test.js",
     "test_auth": "NODE_ENV=test jest ./src/__test__/auth.test.js",
     "test_food": "NODE_ENV=test jest ./src/__test__/food.test.js",
     "test_order": "NODE_ENV=test jest ./src/__test__/order.test.js",
