@@ -50,8 +50,8 @@ async function getAllTables(req, res) {
         const user = await getUser(token);
 
         // Check the user who is calling is welcome or admin
-        if(user.role != "SERVER" && user.role != "WELCOME"){
-            res.status(404).json({ error: 'For getting tables you should be Welcome or Server staff'}); 
+        if(user.role != "SERVER" && user.role != "WELCOME" && user.role != "ADMIN"){
+            res.status(404).json({ error: 'For getting tables you should be Welcome, Server or Admin staff'}); 
             return;
         }
 
@@ -60,6 +60,54 @@ async function getAllTables(req, res) {
 
         // Return 200 status code
         res.status(200).json({tables});
+
+    } catch (error) {
+        if (error.message === 'Invalid token: Email or expiration time not found in token' ||
+            error.message === 'Token has expired') {
+            res.status(401).json({ error: error.message }); 
+        } else if (error.message === 'User not found in the database') {
+            res.status(404).json({ error: error.message }); 
+        } else if (error.name === 'ValidationError') {
+            return res.status(400).json({ error: error.message });
+        } else if (error.code === 11000) {
+            return res.status(409).json({ error: error.message });
+        } else {
+            res.status(500).json({ error: error.message}); 
+        }
+    }
+}
+
+async function updateTable(req, res){
+    try{
+
+        // Get token 
+        const token = req.cookies.token;
+        const user = await getUser(token);
+
+        // Check the user who is calling is welcome or admin
+        if (user.role !== "ADMIN") {
+            return res.status(404).json({ error: 'For updating a table you should be admin!' });
+        }
+
+        const { number, new_number, capacity } = req.body;
+
+        // Find the table
+        const table = await tableSchema.findOne({ number: number });
+        if (!table) {
+            res.status(404).json({ error: "Invalid table number" }); 
+            return;
+        }
+
+        // Check if new_number or capacity is empty or null and retain previous values if so
+        let updatedNumber = new_number ? new_number : table.number;
+        let updatedCapacity = capacity ? capacity : table.capacity;
+
+        // Update the table
+        await tableSchema.updateOne({ number: number }, { number: updatedNumber, capacity: updatedCapacity });
+
+        // Return the updated table
+        const updatedTable = await tableSchema.findOne({ number: updatedNumber });
+        res.status(200).json({ table: updatedTable });
 
     } catch (error) {
         if (error.message === 'Invalid token: Email or expiration time not found in token' ||
@@ -248,6 +296,7 @@ async function deleteTable(req, res){
 
 module.exports = {
     createTable,
+    updateTable,
     getAllTables,
     changeStateTable,
     makeTableEmpty,

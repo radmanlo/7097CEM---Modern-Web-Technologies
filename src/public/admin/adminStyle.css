@@ -1,0 +1,203 @@
+body {
+    background-image: url('./img/piotr-miazga-WBX-ZLr8P7I-unsplash.jpg');
+    background-size: cover; 
+    background-position: center; 
+    font-family: 'Lora', serif;
+    margin: 0;
+    padding: 0;
+}   
+
+.welcomeH1 {
+    margin-top: 50px; 
+    margin-bottom: 50px; 
+    font-family: 'Lora', serif;
+    color: #333; 
+    display: flex;
+    justify-content: center;
+    font-size: 3rem;
+}
+
+.nav-container {
+    background-color: #f0f0f04b; 
+    padding: 10px; 
+    border-radius: 10px; 
+    text-align: center;
+}
+
+.navigator ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.navigator li {
+    display: inline;
+    margin-right: 20px;
+}
+
+.navigator a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.navigator a:hover {
+    color: #555;
+}
+
+.users,
+.tables,
+.foods {
+    background-color: #7e7e7e5d;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 800px; 
+    height: 300px; 
+    overflow: auto;
+    margin: 20px;
+}
+
+.staff-container,
+.table-container,
+.menu-container{
+    display: flex;
+    justify-content: center;
+}
+
+.user-card, 
+.table-card,
+.food-card{
+    background-color: #ffffffd4;
+    border: 1px solid #919090;
+    border-radius: 10px;
+    margin: 20px auto;
+    max-width: 800px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.category-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 70px;
+    margin-right: 70px ;
+}
+
+.ingredient-container{
+    display: flex;
+    flex-direction: column-reverse;
+    margin-right: 20px;
+}
+
+.user-span, 
+.table-span,
+.food-span{
+    display: block;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+    color: #333;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.user-delete-button,
+.table-delete-button,
+.food-delete-button{
+    background-color: #f91e1e;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 16px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.user-delete-button:hover,
+.table-delete-button:hover,
+.food-delete-button:hover{
+    background-color: #bc2626;
+}
+
+.table-create-button,
+.food-create-button{
+    background-color: #1bbb15;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 16px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.button-table-create:hover,
+.table-create-button:hover,
+.button-food-create:hover,
+.food-create-button:hover{
+    background-color: #12700f;
+}
+
+.button-table-create,
+.button-food-create{
+    background-color: #1bbb15;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 35px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.input-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.input{
+    margin-right: 15px;
+}
+
+.table-update-button,
+.food-update-button{
+    background-color: #1e63f9;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 16px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.table-update-button:hover,
+.food-update-button:hover{
+    background-color: #1647b3;
+}
+
+#messageContainer {
+    background-color: #d8f8d7;
+    color: #2a721c;
+    border: 1px solid #cbf5c6;
+    border-radius: 5px;
+    padding: 10px; 
+    margin-top: 10px; 
+    text-align: center;
+    display: none; 
+    justify-content: center;
+}
+
+#messageContainer p {
+    margin: 0; 
+}
+
+footer {
+    display: flex;
+    justify-content: center; 
+    font-family: 'Lora', serif;
+    margin-top: 100px ;
+    margin-bottom: 30px;
+}

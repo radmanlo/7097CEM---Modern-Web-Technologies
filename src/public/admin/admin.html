@@ -3,9 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="adminStyle.css">
+    <title>Admin</title>
 </head>
 <body>
-    <h1>ADMIN PAGE</h1>
+    <h1 id="welcomeHeading" class="welcomeH1"></h1>
+
+    
+
+    <div class="nav-container">
+        <nav class="navigator">
+            <ul>
+                <li><a href="#" id="staff-link">Staff</a></li>
+                <li><a href="#" id="table-link">Table</a></li>
+                <li><a href="#" id="menu-link">Menu</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div class="message-container" id="messageContainer"></div>
+
+    <!-- <div class="roles-selector" id="roles-selector">
+        <label for="roles">Choose a role:</label>
+        <select class="roles" id="roles" visibilit="none">
+            <option value="ADMIN">Admin</option>
+            <option value="SERVER">Server</option>
+            <option value="KITCHEN">Kitchen</option>
+            <option value="WELCOME">Welcome</option>
+        </select>
+    </div> -->
+    <div class="staff-container" id="staff-container"></div>
+    <div class="table-container" id="table-container"></div>
+    <div class="menu-container" id="menu-container"></div>
+
+
+    <footer>
+        <p><small>&copy; 2024 Your Company. All rights reserved. | Designed by Radman</small></p>
+    </footer>
+
+    <script src="adminScript.js"></script>
 </body>
 </html>
