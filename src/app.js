@@ -1,4 +1,5 @@
 const express = require('express')
+const path = require('path'); 
 require('dotenv').config();
 
 const db = require("./config/db")
@@ -25,14 +26,12 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/food', foodRoutes);
 app.use('/api/order', orderRoutes);
 
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(path.join(__dirname, 'public/')));
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
-
-app.get('/signup', function(req, res){
-  res.sendFile(__dirname + '/public/signup/singup.html')
+// Route for the root URL
+app.get('/', function(req, res){
+  // Send the signup.html file
+  res.sendFile(path.join(__dirname, 'public/signup/signup.html'));
 });
 
 if (process.env.NODE_ENV !== 'test') {
