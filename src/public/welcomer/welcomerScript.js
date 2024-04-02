@@ -59,7 +59,7 @@ function createEmptyTableElement(table) {
     const occupyButton = tableDiv.querySelector('.occupy-button');
 
     occupyButton.addEventListener('click', function() {
-        fetch(`http://localhost:8080/api/table/state?number=${table.number}`, {
+        fetch(`https://orderingsystem.azurewebsites.net/api/table/state?number=${table.number}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -103,7 +103,7 @@ function createOccupiedTableElement(table) {
 
     occupyButton.addEventListener('click', function() {
 
-        fetch(`http://localhost:8080/api/table/empty?number=${table.number}`, {
+        fetch(`https://orderingsystem.azurewebsites.net/api/table/empty?number=${table.number}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -136,7 +136,7 @@ function createOccupiedTableElement(table) {
 
 function start() {
     
-    fetch('http://localhost:8080/api/table/getAll')
+    fetch('https://orderingsystem.azurewebsites.net/api/table/getAll')
         .then(response => response.json())
         .then(data => {
 

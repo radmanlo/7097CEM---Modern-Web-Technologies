@@ -183,7 +183,7 @@ function createFoodCard(){
                     category: checkedCheckbox.value,
                     ingredients: ingredientsObject,
                 }
-                fetch('http://localhost:8080/api/food/create',{
+                fetch('https://orderingsystem.azurewebsites.net/api/food/create',{
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -737,7 +737,7 @@ function createStaffCard(){
 
 
                         deleteButton.addEventListener('click', function(){
-                            fetch(`http://localhost:8080/api/admin/delete?email=${user.email}`, {
+                            fetch(`https://orderingsystem.azurewebsites.net/api/admin/delete?email=${user.email}`, {
                                 method: 'DELETE',
                                 headers: {
                                     'Content-Type': 'application/json'
