@@ -1,4 +1,27 @@
 document.addEventListener('DOMContentLoaded', function() {
+    const signoutLink = document.getElementById('signout-link');
+    signoutLink.addEventListener('click', function(event) {
+        event.preventDefault(); 
+
+        const confirmSignout = confirm("Are you sure you want to sign out?");
+        
+        if (confirmSignout) {
+            fetch('/signout', {
+                method: 'GET',
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = '/signin/signin.html';
+                } else {
+                    console.error('Failed to sign out:', response.status);
+                }
+            })
+            .catch(error => {
+                console.error('Error during sign out:', error);
+            });
+        }
+    });
+
     start()
 })
 
@@ -7,7 +30,8 @@ function getCookie(name) {
     for (let i = 0; i < cookieArray.length; i++) {
         const cookie = cookieArray[i].trim();
         if (cookie.startsWith(name + '=')) {
-            return cookie.substring(name.length + 1);
+            // Decode the cookie value to replace %20 with a space
+            return decodeURIComponent(cookie.substring(name.length + 1));
         }
     }
     return null;
@@ -24,7 +48,7 @@ if (userName) {
 
 function start() {
     
-    fetch('http://localhost:3000/api/table/getAll')
+    fetch('http://localhost:8080/api/table/getAll')
         .then(response => response.json())
         .then(data => {
 
@@ -80,7 +104,7 @@ function createWaitingTableElement(table){
     tableNumber.textContent = `Table ${table.number}`;
     tableDiv.appendChild(tableNumber);
 
-    fetch(`http://localhost:3000/api/order/get/table?tableNumber=${table.number}`)
+    fetch(`http://localhost:8080/api/order/get/table?tableNumber=${table.number}`)
         .then(response=>{
             if (response.status == 200){
                 const tableOrder = document.createElement('div');
@@ -101,14 +125,14 @@ function createWaitingTableElement(table){
                         cancelOrderBtn.classList.add('cancel-order-btn'); 
                         tableOrder.appendChild(cancelOrderBtn);
                         cancelOrderBtn.addEventListener('click', function() {
-                            fetch(`http://localhost:3000/api/order/cancel?orderId=${res._id}`, {
+                            fetch(`http://localhost:8080/api/order/cancel?orderId=${res._id}`, {
                                 method: 'PUT',
                                 headers: {
                                     'Content-Type': 'application/json'
                                 }
                             }).then(respond => {
                                 if (respond.status == 200){
-                                    fetch(`http://localhost:3000/api/table/empty?number=${table.number}`, {
+                                    fetch(`http://localhost:8080/api/table/empty?number=${table.number}`, {
                                         method: 'PUT',
                                         headers: {
                                             'Content-Type': 'application/json'
@@ -152,7 +176,7 @@ function createWaitingTableElement(table){
                         tableDiv.appendChild(deliverOrderBtn);
 
                         deliverOrderBtn.addEventListener('click', function() {
-                            fetch(`http://localhost:3000/api/table/state?number=${table.number}`, {
+                            fetch(`http://localhost:8080/api/table/state?number=${table.number}`, {
                                 method: 'PUT',
                                 headers: {
                                     'Content-Type': 'application/json'
@@ -254,7 +278,7 @@ function createOrderCard(table){
         const order = {table_number: table.number, order_items: orderItems};
 
 
-        fetch('http://localhost:3000/api/order/create ', {
+        fetch('http://localhost:8080/api/order/create ', {
 
             method: 'POST',
             headers: {
@@ -266,7 +290,7 @@ function createOrderCard(table){
         .then(response => {
             if (response.status == 201) {
 
-                fetch(`http://localhost:3000/api/table/state?number=${table.number}`, {
+                fetch(`http://localhost:8080/api/table/state?number=${table.number}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'
@@ -309,7 +333,7 @@ function createOrderCard(table){
         });
     })
 
-    fetch('http://localhost:3000/api/food/getBy?category=BEVERAGE')
+    fetch('http://localhost:8080/api/food/getBy?category=BEVERAGE')
         .then(response => response.json())
         .then(data => {
             createFoodcard(data);
@@ -318,7 +342,7 @@ function createOrderCard(table){
 
     const beverageBtn = document.getElementById('beverageBtn');
     beverageBtn.addEventListener('click', function() {
-        fetch('http://localhost:3000/api/food/getBy?category=BEVERAGE')
+        fetch('http://localhost:8080/api/food/getBy?category=BEVERAGE')
         .then(response => response.json())
         .then(data => {
             createFoodcard(data);
@@ -327,7 +351,7 @@ function createOrderCard(table){
 
     const appetizerBtn = document.getElementById('appetizerBtn');
     appetizerBtn.addEventListener('click', function() {
-        fetch('http://localhost:3000/api/food/getBy?category=APPETIZER')
+        fetch('http://localhost:8080/api/food/getBy?category=APPETIZER')
         .then(response => response.json())
         .then(data => {
             createFoodcard(data);
@@ -336,7 +360,7 @@ function createOrderCard(table){
 
     const foodBtn = document.getElementById('foodBtn');
     foodBtn.addEventListener('click', function() {
-        fetch('http://localhost:3000/api/food/getBy?category=FOOD')
+        fetch('http://localhost:8080/api/food/getBy?category=FOOD')
         .then(response => response.json())
         .then(data => {
             createFoodcard(data);
@@ -345,7 +369,7 @@ function createOrderCard(table){
 
     const dessertBtn = document.getElementById('dessertBtn');
     dessertBtn.addEventListener('click', function() {
-        fetch('http://localhost:3000/api/food/getBy?category=DESSERT')
+        fetch('http://localhost:8080/api/food/getBy?category=DESSERT')
         .then(response => response.json())
         .then(data => {
             createFoodcard(data);

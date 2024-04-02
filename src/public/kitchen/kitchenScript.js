@@ -1,9 +1,36 @@
+document.addEventListener('DOMContentLoaded', function() {
+    const signoutLink = document.getElementById('signout-link');
+    signoutLink.addEventListener('click', function(event) {
+        event.preventDefault(); 
+
+        const confirmSignout = confirm("Are you sure you want to sign out?");
+        
+        if (confirmSignout) {
+            fetch('/signout', {
+                method: 'GET',
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = '/signin/signin.html';
+                } else {
+                    console.error('Failed to sign out:', response.status);
+                }
+            })
+            .catch(error => {
+                console.error('Error during sign out:', error);
+            });
+        }
+    });
+    start()
+})
+
 function getCookie(name) {
     const cookieArray = document.cookie.split(';');
     for (let i = 0; i < cookieArray.length; i++) {
         const cookie = cookieArray[i].trim();
         if (cookie.startsWith(name + '=')) {
-            return cookie.substring(name.length + 1);
+            // Decode the cookie value to replace %20 with a space
+            return decodeURIComponent(cookie.substring(name.length + 1));
         }
     }
     return null;
@@ -18,13 +45,9 @@ if (userName) {
     welcomeHeading.textContent = 'Welcome';
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    start()
-})
-
 function start() {
     
-    fetch('http://localhost:3000/api/order/get/kitchen')
+    fetch('http://localhost:8080/api/order/get/kitchen')
         .then(response => response.json())
         .then(data => {
 
@@ -70,7 +93,7 @@ function createPendingOrdersElement(order) {
     acceptOrderBtn.addEventListener('click', function() {
 
         console.log(order.orderId)
-        fetch(`http://localhost:3000/api/order/update?orderId=${order.orderId}`, {
+        fetch(`http://localhost:8080/api/order/update?orderId=${order.orderId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -103,7 +126,7 @@ function createPendingOrdersElement(order) {
     const cancelOrderBtn = orderDiv.querySelector('.cancelOrderBtn');
 
     cancelOrderBtn.addEventListener('click', function() {
-        fetch(`http://localhost:3000/api/order/cancel?orderId=${orde.orderId}`, {
+        fetch(`http://localhost:8080/api/order/cancel?orderId=${orde.orderId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -154,7 +177,7 @@ function createPreparingOrdersElement(order) {
 
     readyOrderBtn.addEventListener('click', function() {
 
-        fetch(`http://localhost:3000/api/order/update?orderId=${order.orderId}`, {
+        fetch(`http://localhost:8080/api/order/update?orderId=${order.orderId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'

@@ -29,9 +29,13 @@ app.use('/api/order', orderRoutes);
 
 app.use(express.static(path.join(__dirname, 'public/')));
 
-// Route for the root URL
+
 app.get('/', function(req, res){
-  // Send the signup.html file
+  res.sendFile(path.join(__dirname, 'public/signup/signup.html'));
+});
+
+app.get('/signout', function(req, res) {
+  res.clearCookie('token', { httpOnly: true });
   res.sendFile(path.join(__dirname, 'public/signup/signup.html'));
 });
 

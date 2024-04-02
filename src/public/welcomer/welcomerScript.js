@@ -1,5 +1,27 @@
 
 document.addEventListener('DOMContentLoaded', function() {
+    const signoutLink = document.getElementById('signout-link');
+    signoutLink.addEventListener('click', function(event) {
+        event.preventDefault(); 
+
+        const confirmSignout = confirm("Are you sure you want to sign out?");
+        
+        if (confirmSignout) {
+            fetch('/signout', {
+                method: 'GET',
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = '/signin/signin.html';
+                } else {
+                    console.error('Failed to sign out:', response.status);
+                }
+            })
+            .catch(error => {
+                console.error('Error during sign out:', error);
+            });
+        }
+    });
     start()
 })
 
@@ -37,7 +59,7 @@ function createEmptyTableElement(table) {
     const occupyButton = tableDiv.querySelector('.occupy-button');
 
     occupyButton.addEventListener('click', function() {
-        fetch(`http://localhost:3000/api/table/state?number=${table.number}`, {
+        fetch(`http://localhost:8080/api/table/state?number=${table.number}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -81,7 +103,7 @@ function createOccupiedTableElement(table) {
 
     occupyButton.addEventListener('click', function() {
 
-        fetch(`http://localhost:3000/api/table/empty?number=${table.number}`, {
+        fetch(`http://localhost:8080/api/table/empty?number=${table.number}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -114,7 +136,7 @@ function createOccupiedTableElement(table) {
 
 function start() {
     
-    fetch('http://localhost:3000/api/table/getAll')
+    fetch('http://localhost:8080/api/table/getAll')
         .then(response => response.json())
         .then(data => {
 

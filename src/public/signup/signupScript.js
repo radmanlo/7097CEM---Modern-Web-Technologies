@@ -27,7 +27,7 @@ document.getElementById('signInButton').addEventListener('click', function() {
     console.log(data)
 
     // Make an AJAX request to the sign-in API
-    fetch('http://localhost:3000/api/auth/signup', {
+    fetch('http://localhost:8080/api/auth/signup', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

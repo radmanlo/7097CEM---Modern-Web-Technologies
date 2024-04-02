@@ -1,11 +1,9 @@
-
-
 function getCookie(name) {
     const cookieArray = document.cookie.split(';');
     for (let i = 0; i < cookieArray.length; i++) {
         const cookie = cookieArray[i].trim();
         if (cookie.startsWith(name + '=')) {
-            return cookie.substring(name.length + 1);
+            return decodeURIComponent(cookie.substring(name.length + 1));
         }
     }
     return null;
@@ -30,6 +28,7 @@ function start(){
     const staffLink = document.getElementById('staff-link');
     const tableLink = document.getElementById('table-link');
     const menuLink = document.getElementById('menu-link');
+    const signoutLink = document.getElementById('signout-link');
 
     const StaffContainer = document.getElementById('staff-container');
     const tableContainer = document.getElementById('table-container');
@@ -61,11 +60,162 @@ function start(){
         menuContainer.innerHTML = '';
         createFoodCard(); 
     })
+
+    signoutLink.addEventListener('click', function(event) {
+        event.preventDefault(); 
+
+        const confirmSignout = confirm("Are you sure you want to sign out?");
+        
+        if (confirmSignout) {
+            fetch('/signout', {
+                method: 'GET',
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = '/signin/signin.html';
+                } else {
+                    console.error('Failed to sign out:', response.status);
+                }
+            })
+            .catch(error => {
+                console.error('Error during sign out:', error);
+            });
+        }
+    });
 }
 
 function createFoodCard(){
 
-    fetch('http://localhost:3000/api/food/getAll')
+    const foods = document.createElement('div');
+    foods.classList.add('foods');
+
+    const addNewFood = document.createElement('button');
+    addNewFood.classList.add('button-food-create');
+    addNewFood.textContent='Add New Food';
+    foods.appendChild(addNewFood);
+
+    addNewFood.addEventListener('click', function(){
+
+        const foodCard = document.createElement('div');
+        foodCard.classList.add('food-card');
+
+        const inputContainer = document.createElement('div');
+        inputContainer.classList.add('input-container');
+        foodCard.appendChild(inputContainer);
+
+        const foodNameInput = document.createElement('input');
+        foodNameInput.classList.add('input');
+        foodNameInput.setAttribute('type', 'text');
+        foodNameInput.setAttribute('id', 'newfoodName');
+        foodNameInput.setAttribute('placeholder', 'Food Name');
+        inputContainer.appendChild(foodNameInput);
+
+        const categoryContainer = document.createElement('div');
+        categoryContainer.classList.add('category-container');
+        inputContainer.appendChild(categoryContainer);
+
+        // Create checkbox inputs for food categories
+        const categories = ['BEVERAGE', 'FOOD', 'DESSERT', 'APPTIZER'];
+        const checkboxes = [];
+
+        categories.forEach(category => {
+            const checkboxLabel = document.createElement('label');
+            checkboxLabel.textContent = category;
+
+            const checkboxInput = document.createElement('input');
+            checkboxInput.setAttribute('type', 'checkbox');
+            checkboxInput.setAttribute('name', 'category');
+            checkboxInput.setAttribute('value', category);
+
+            // Add event listener to uncheck other checkboxes when this one is checked
+            checkboxInput.addEventListener('change', () => {
+                checkboxes.forEach(checkbox => {
+                    if (checkbox !== checkboxInput) {
+                        checkbox.checked = false;
+                    }
+                });
+            });
+
+            checkboxLabel.appendChild(checkboxInput);
+            categoryContainer.appendChild(checkboxLabel);
+
+            checkboxes.push(checkboxInput);
+        });
+        const IngContainerDiv = document.createElement('div');
+        IngContainerDiv.classList.add('ingredient-container');
+        inputContainer.appendChild(IngContainerDiv);
+
+        const addIngButton = document.createElement('button');
+        addIngButton.textContent = 'add Ingredient';
+        addIngButton.classList.add('add-ing-button');
+        IngContainerDiv.appendChild(addIngButton)
+
+
+        let ingredientIndex = 0;
+
+        addIngButton.addEventListener('click', () => {
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.placeholder = 'Ingredient';
+            input.classList.add('ingredient-input');
+            input.name = `ingredient${ingredientIndex}`;
+            IngContainerDiv.appendChild(input);
+            
+            ingredientIndex++;
+        });
+
+        const submitUpdateBtn = document.createElement('button');
+        submitUpdateBtn.textContent = 'Create';
+        submitUpdateBtn.classList.add('food-create-button');
+        inputContainer.appendChild(submitUpdateBtn)
+
+        submitUpdateBtn.addEventListener('click', function(){
+            const checkedCheckbox = document.querySelector('input[type="checkbox"]:checked');
+            const ingredientInputs = document.querySelectorAll('.ingredient-input');
+            const newfoodName = document.getElementById('newfoodName');
+            const ingredientsObject = {};
+            ingredientInputs.forEach((input, index) => {
+                ingredientsObject[index] = input.value.trim();
+            });
+            if (checkedCheckbox !== null && newfoodName != null){
+                updatedFood ={
+                    name: newfoodName.value,
+                    category: checkedCheckbox.value,
+                    ingredients: ingredientsObject,
+                }
+                fetch('http://localhost:8080/api/food/create',{
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(updatedFood)
+                }).then(response => {
+                    if(response.status == 201){
+                        const messageElement = document.createElement('p');
+                        messageElement.textContent = "Fodd Created Successfully!";
+                        const messageContainer = document.getElementById('messageContainer');
+                        messageContainer.innerHTML='';
+                        messageContainer.appendChild(messageElement);
+                        messageContainer.style.display='flex';
+                        const menuContainer = document.getElementById('menu-container');
+                        menuContainer.innerHTML = '';
+                        createFoodCard();
+                    }
+                    else{
+                        throw new Error(`Create Food API status code: ${respond.status}`);
+                    }
+                }).catch(error => {
+                    alert(`Create Food API Error please try again! ${error}`);
+                    
+                })
+            }
+            else{
+                alert("Please specify the category and food name!");
+            }
+        })
+        foods.appendChild(foodCard);
+    })
+    fetch('http://localhost:8080/api/food/getAll')
     .then(response => {
         if(response.status == 200){
             response.json().then(data => {
@@ -107,7 +257,7 @@ function createFoodCard(){
                     buttonDiv.appendChild(deleteFoodButton);
 
                     deleteFoodButton.addEventListener('click', function(){
-                        fetch(`http://localhost:3000/api/food/delete?foodId=${food._id}`,{
+                        fetch(`http://localhost:8080/api/food/delete?foodId=${food._id}`,{
                             method: 'DELETE',
                             headers: {
                                 'Content-Type': 'application/json'
@@ -116,14 +266,14 @@ function createFoodCard(){
                         .then(respond =>{
                             if(respond.status == 200){
                                 const messageElement = document.createElement('p');
-                                messageElement.textContent = "Table Deleted Successfully!";
+                                messageElement.textContent = "Food Deleted Successfully!";
                                 const messageContainer = document.getElementById('messageContainer');
                                 messageContainer.innerHTML='';
                                 messageContainer.appendChild(messageElement);
                                 messageContainer.style.display='flex';
                                 const menuContainer = document.getElementById('menu-container');
                                 menuContainer.innerHTML = '';
-                                createTableCard();
+                                createFoodCard();
                             }
                             else{
                                 throw new Error(`Delete Food API status code: ${respond.status}`);
@@ -242,7 +392,7 @@ function createFoodCard(){
                                     ingredients: ingredientsObject,
                                 }
                             }
-                            fetch(`http://localhost:3000/api/food/update`,{
+                            fetch(`http://localhost:8080/api/food/update`,{
                                 method: 'PUT',
                                 headers: {
                                     'Content-Type': 'application/json'
@@ -271,142 +421,12 @@ function createFoodCard(){
                         foodCard.appendChild(inputContainer);
                     })
                     foods.appendChild(foodCard);
-                    const menuContainer = document.getElementById('menu-container')
-                    menuContainer.appendChild(foods);
                 })
             })
         }
     })
-
-    const foods = document.createElement('div');
-    foods.classList.add('foods');
-
-    const addNewFood = document.createElement('button');
-    addNewFood.classList.add('button-food-create');
-    addNewFood.textContent='Add New Food';
-    foods.appendChild(addNewFood);
-
-    addNewFood.addEventListener('click', function(){
-
-        const foodCard = document.createElement('div');
-        foodCard.classList.add('food-card');
-
-        const inputContainer = document.createElement('div');
-        inputContainer.classList.add('input-container');
-        foodCard.appendChild(inputContainer);
-
-        const foodNameInput = document.createElement('input');
-        foodNameInput.classList.add('input');
-        foodNameInput.setAttribute('type', 'text');
-        foodNameInput.setAttribute('id', 'newfoodName');
-        foodNameInput.setAttribute('placeholder', 'Food Name');
-        inputContainer.appendChild(foodNameInput);
-
-        const categoryContainer = document.createElement('div');
-        categoryContainer.classList.add('category-container');
-        inputContainer.appendChild(categoryContainer);
-
-        // Create checkbox inputs for food categories
-        const categories = ['BEVERAGE', 'FOOD', 'DESSERT', 'APPTIZER'];
-        const checkboxes = [];
-
-        categories.forEach(category => {
-            const checkboxLabel = document.createElement('label');
-            checkboxLabel.textContent = category;
-
-            const checkboxInput = document.createElement('input');
-            checkboxInput.setAttribute('type', 'checkbox');
-            checkboxInput.setAttribute('name', 'category');
-            checkboxInput.setAttribute('value', category);
-
-            // Add event listener to uncheck other checkboxes when this one is checked
-            checkboxInput.addEventListener('change', () => {
-                checkboxes.forEach(checkbox => {
-                    if (checkbox !== checkboxInput) {
-                        checkbox.checked = false;
-                    }
-                });
-            });
-
-            checkboxLabel.appendChild(checkboxInput);
-            categoryContainer.appendChild(checkboxLabel);
-
-            checkboxes.push(checkboxInput);
-        });
-        const IngContainerDiv = document.createElement('div');
-        IngContainerDiv.classList.add('ingredient-container');
-        inputContainer.appendChild(IngContainerDiv);
-
-        const addIngButton = document.createElement('button');
-        addIngButton.textContent = 'add Ingredient';
-        addIngButton.classList.add('add-ing-button');
-        IngContainerDiv.appendChild(addIngButton)
-
-
-        let ingredientIndex = 0;
-
-        addIngButton.addEventListener('click', () => {
-            const input = document.createElement('input');
-            input.type = 'text';
-            input.placeholder = 'Ingredient';
-            input.classList.add('ingredient-input');
-            input.name = `ingredient${ingredientIndex}`;
-            IngContainerDiv.appendChild(input);
-            
-            ingredientIndex++;
-        });
-
-        const submitUpdateBtn = document.createElement('button');
-        submitUpdateBtn.textContent = 'Create';
-        submitUpdateBtn.classList.add('food-create-button');
-        inputContainer.appendChild(submitUpdateBtn)
-
-        submitUpdateBtn.addEventListener('click', function(){
-            const checkedCheckbox = document.querySelector('input[type="checkbox"]:checked');
-            const ingredientInputs = document.querySelectorAll('.ingredient-input');
-            const newfoodName = document.getElementById('newfoodName');
-            const ingredientsObject = {};
-            ingredientInputs.forEach((input, index) => {
-                ingredientsObject[index] = input.value.trim();
-            });
-            if (checkedCheckbox !== null && newfoodName != null){
-                updatedFood ={
-                    name: newfoodName.value,
-                    category: checkedCheckbox.value,
-                    ingredients: ingredientsObject,
-                }
-                fetch('http://localhost:3000/api/food/create',{
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(updatedFood)
-                }).then(response => {
-                    if(response.status == 201){
-                        const messageElement = document.createElement('p');
-                        messageElement.textContent = "Fodd Created Successfully!";
-                        const messageContainer = document.getElementById('messageContainer');
-                        messageContainer.innerHTML='';
-                        messageContainer.appendChild(messageElement);
-                        messageContainer.style.display='flex';
-                        const menuContainer = document.getElementById('menu-container');
-                        menuContainer.innerHTML = '';
-                        createFoodCard();
-                    }
-                    else{
-                        throw new Error(`Create Food API status code: ${respond.status}`);
-                    }
-                }).catch(error => {
-                    alert(`Create Food API Error please try again! ${error}`);
-                    
-                })
-            }
-            else{
-                alert("Please specify the category and food name!");
-            }
-        })
-        foods.appendChild(foodCard);
-    })
+    const menuContainer = document.getElementById('menu-container')
+    menuContainer.appendChild(foods);
 
 }
 
@@ -450,7 +470,7 @@ function createTableCard(){
             const capacityIn = document.getElementById('newTableCapacity').value;
             const tableNum = document.getElementById('newTableNumber').value;
             if(capacityIn != null && tableNum != null){
-                fetch(`http://localhost:3000/api/table/create?number=${tableNum}&capacity=${capacityIn}`,{
+                fetch(`http://localhost:8080/api/table/create?number=${tableNum}&capacity=${capacityIn}`,{
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -492,7 +512,7 @@ function createTableCard(){
 
     })
 
-    fetch('http://localhost:3000/api/table/getAll') 
+    fetch('http://localhost:8080/api/table/getAll') 
     .then(response => {
         if (response.status == 200){
             
@@ -521,7 +541,7 @@ function createTableCard(){
                     buttonDiv.appendChild(deleteTableButton);
 
                     deleteTableButton.addEventListener('click', function(){
-                        fetch(`http://localhost:3000/api/table/delete?number=${table.number}`,{
+                        fetch(`http://localhost:8080/api/table/delete?number=${table.number}`,{
                             method: 'DELETE',
                             headers: {
                                 'Content-Type': 'application/json'
@@ -575,7 +595,7 @@ function createTableCard(){
                         submitUpdate.addEventListener('click', function(){
                             const newTableNumber = document.getElementById('newTableNumber').value;
                             const newTableCapacity = document.getElementById('newTableCapacity').value;
-                            fetch(`http://localhost:3000/api/table/update`,{
+                            fetch(`http://localhost:8080/api/table/update`,{
                                 method: 'PUT',
                                 headers: {
                                     'Content-Type': 'application/json'
@@ -634,7 +654,7 @@ function createTableCard(){
 
 function createStaffCard(){
     
-    fetch('http://localhost:3000/api/admin/users') 
+    fetch('http://localhost:8080/api/admin/users') 
     .then(response => {
         
         if (response.status == 200){
@@ -690,7 +710,7 @@ function createStaffCard(){
 
                         acceptButton.addEventListener('click', function(){
                             const roleIn = document.getElementById('roles');
-                            fetch(`http://localhost:3000/api/admin/changeRole`, {
+                            fetch(`http://localhost:8080/api/admin/changeRole`, {
                                 method: 'PUT',
                                 headers: {
                                     'Content-Type': 'application/json'
@@ -710,6 +730,35 @@ function createStaffCard(){
                             })
                         })
 
+                        const deleteButton = document.createElement('button');
+                        deleteButton.textContent='Delete';
+                        deleteButton.classList.add('user-delete-button');
+                        userCard.appendChild(deleteButton);
+
+
+                        deleteButton.addEventListener('click', function(){
+                            fetch(`http://localhost:8080/api/admin/delete?email=${user.email}`, {
+                                method: 'DELETE',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                }
+                            }) 
+                            .then(respond => {
+                                if (respond.status == 200){
+                                    const messageElement = document.createElement('p');
+                                    messageElement.textContent = "Deleted Successfully!";
+                                    const messageContainer = document.getElementById('messageContainer');
+                                    messageContainer.innerHTML='';
+                                    messageContainer.appendChild(messageElement);
+                                    messageContainer.style.display='flex';
+                                    start()
+                                }
+                                else{
+                                    throw new Error(`Delete user API status code: ${respond.status}`); 
+                                }
+                            })
+                        });
+
                     }
                     else{
 
@@ -726,7 +775,7 @@ function createStaffCard(){
                         userCard.appendChild(deleteButton);
 
                         deleteButton.addEventListener('click', function(){
-                            fetch(`http://localhost:3000/api/admin/delete?email=${user.email}`, {
+                            fetch(`http://localhost:8080/api/admin/delete?email=${user.email}`, {
                                 method: 'DELETE',
                                 headers: {
                                     'Content-Type': 'application/json'
