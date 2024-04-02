@@ -24,6 +24,7 @@ afterAll(async () => {
 describe('Table APIs', () => {
 
     let adminToken;
+    let kitchenToken;
     let welcomeToken;
 
     beforeAll(async () => {
@@ -46,6 +47,28 @@ describe('Table APIs', () => {
         expect(adminResponse.status).toBe(200);
         expect(adminResponse.body).toHaveProperty('name', 'Admin User');
         adminToken = adminResponse.headers['set-cookie'][0];
+    });
+
+    beforeAll(async () => {
+
+        // Save the user to the test database
+        const userData = {
+            name: 'Kitchen User',
+            email: 'kitchen@example.com',
+            password: 'password',
+            role: 'KITCHEN'
+        };
+        const user = new userSchema(userData);    
+        await user.save();
+  
+        // Then, sign in with the created user
+        const kitchenResponse = await request(app)
+            .post('/api/auth/signin')
+            .send({ email: 'kitchen@example.com', password: 'password' });
+
+        expect(kitchenResponse.status).toBe(200);
+        expect(kitchenResponse.body).toHaveProperty('name', 'Kitchen User');
+        kitchenToken = kitchenResponse.headers['set-cookie'][0];
     });
 
     beforeAll(async () => {
@@ -130,10 +153,10 @@ describe('Table APIs', () => {
 
             const response = await request(app)
                 .get('/api/table/getAll')
-                .set('Cookie', adminToken);
+                .set('Cookie', kitchenToken);
     
             expect(response.statusCode).toBe(404);
-            expect(response.body).toHaveProperty("error", 'For getting tables you should be Welcome or Server staff');
+            expect(response.body).toHaveProperty("error", "For getting tables you should be Welcome, Server or Admin staff");
     
         });
 
