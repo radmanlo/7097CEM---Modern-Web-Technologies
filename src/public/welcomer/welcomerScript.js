@@ -30,7 +30,8 @@ function getCookie(name) {
     for (let i = 0; i < cookieArray.length; i++) {
         const cookie = cookieArray[i].trim();
         if (cookie.startsWith(name + '=')) {
-            return cookie.substring(name.length + 1);
+            // Decode the cookie value to replace %20 with a space
+            return decodeURIComponent(cookie.substring(name.length + 1));
         }
     }
     return null;
