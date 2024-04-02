@@ -123,6 +123,7 @@ body {
     background-color: #bc2626;
 }
 
+.user-accept-button,
 .table-create-button,
 .food-create-button{
     background-color: #1bbb15;
@@ -134,6 +135,7 @@ body {
     cursor: pointer;
 }
 
+.user-accept-button:hover,
 .button-table-create:hover,
 .table-create-button:hover,
 .button-food-create:hover,

@@ -25,6 +25,36 @@ body {
     font-size: 3rem;
 }
 
+.nav-container {
+    background-color: #f0f0f04b; 
+    padding: 10px; 
+    border-radius: 10px; 
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.navigator ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.navigator li {
+    display: inline;
+    margin-right: 20px;
+}
+
+.navigator a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.navigator a:hover {
+    color: #555;
+}
+
 .order-container {
     display: flex;
     justify-content: space-between;
