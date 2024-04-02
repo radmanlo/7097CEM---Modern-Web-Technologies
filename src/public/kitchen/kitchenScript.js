@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function start() {
     
-    fetch('http://localhost:3000/api/order/get/kitchen')
+    fetch('https://orderingsystem.azurewebsites.net/api/order/get/kitchen')
         .then(response => response.json())
         .then(data => {
 
@@ -70,7 +70,7 @@ function createPendingOrdersElement(order) {
     acceptOrderBtn.addEventListener('click', function() {
 
         console.log(order.orderId)
-        fetch(`http://localhost:3000/api/order/update?orderId=${order.orderId}`, {
+        fetch(`https://orderingsystem.azurewebsites.net/api/order/update?orderId=${order.orderId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -103,7 +103,7 @@ function createPendingOrdersElement(order) {
     const cancelOrderBtn = orderDiv.querySelector('.cancelOrderBtn');
 
     cancelOrderBtn.addEventListener('click', function() {
-        fetch(`http://localhost:3000/api/order/cancel?orderId=${orde.orderId}`, {
+        fetch(`https://orderingsystem.azurewebsites.net/api/order/cancel?orderId=${orde.orderId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -154,7 +154,7 @@ function createPreparingOrdersElement(order) {
 
     readyOrderBtn.addEventListener('click', function() {
 
-        fetch(`http://localhost:3000/api/order/update?orderId=${order.orderId}`, {
+        fetch(`https://orderingsystem.azurewebsites.net/api/order/update?orderId=${order.orderId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'

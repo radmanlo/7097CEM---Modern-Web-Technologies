@@ -65,7 +65,7 @@ function start(){
 
 function createFoodCard(){
 
-    fetch('http://localhost:3000/api/food/getAll')
+    fetch('https://orderingsystem.azurewebsites.net/api/food/getAll')
     .then(response => {
         if(response.status == 200){
             response.json().then(data => {
@@ -107,7 +107,7 @@ function createFoodCard(){
                     buttonDiv.appendChild(deleteFoodButton);
 
                     deleteFoodButton.addEventListener('click', function(){
-                        fetch(`http://localhost:3000/api/food/delete?foodId=${food._id}`,{
+                        fetch(`https://orderingsystem.azurewebsites.net/api/food/delete?foodId=${food._id}`,{
                             method: 'DELETE',
                             headers: {
                                 'Content-Type': 'application/json'
@@ -242,7 +242,7 @@ function createFoodCard(){
                                     ingredients: ingredientsObject,
                                 }
                             }
-                            fetch(`http://localhost:3000/api/food/update`,{
+                            fetch(`https://orderingsystem.azurewebsites.net/api/food/update`,{
                                 method: 'PUT',
                                 headers: {
                                     'Content-Type': 'application/json'
@@ -375,7 +375,7 @@ function createFoodCard(){
                     category: checkedCheckbox.value,
                     ingredients: ingredientsObject,
                 }
-                fetch('http://localhost:3000/api/food/create',{
+                fetch('https://orderingsystem.azurewebsites.net/api/food/create',{
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -450,7 +450,7 @@ function createTableCard(){
             const capacityIn = document.getElementById('newTableCapacity').value;
             const tableNum = document.getElementById('newTableNumber').value;
             if(capacityIn != null && tableNum != null){
-                fetch(`http://localhost:3000/api/table/create?number=${tableNum}&capacity=${capacityIn}`,{
+                fetch(`https://orderingsystem.azurewebsites.net/api/table/create?number=${tableNum}&capacity=${capacityIn}`,{
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -492,7 +492,7 @@ function createTableCard(){
 
     })
 
-    fetch('http://localhost:3000/api/table/getAll') 
+    fetch('https://orderingsystem.azurewebsites.net/api/table/getAll') 
     .then(response => {
         if (response.status == 200){
             
@@ -521,7 +521,7 @@ function createTableCard(){
                     buttonDiv.appendChild(deleteTableButton);
 
                     deleteTableButton.addEventListener('click', function(){
-                        fetch(`http://localhost:3000/api/table/delete?number=${table.number}`,{
+                        fetch(`https://orderingsystem.azurewebsites.net/api/table/delete?number=${table.number}`,{
                             method: 'DELETE',
                             headers: {
                                 'Content-Type': 'application/json'
@@ -575,7 +575,7 @@ function createTableCard(){
                         submitUpdate.addEventListener('click', function(){
                             const newTableNumber = document.getElementById('newTableNumber').value;
                             const newTableCapacity = document.getElementById('newTableCapacity').value;
-                            fetch(`http://localhost:3000/api/table/update`,{
+                            fetch(`https://orderingsystem.azurewebsites.net/api/table/update`,{
                                 method: 'PUT',
                                 headers: {
                                     'Content-Type': 'application/json'
@@ -634,7 +634,7 @@ function createTableCard(){
 
 function createStaffCard(){
     
-    fetch('http://localhost:3000/api/admin/users') 
+    fetch('https://orderingsystem.azurewebsites.net/api/admin/users') 
     .then(response => {
         
         if (response.status == 200){
@@ -690,7 +690,7 @@ function createStaffCard(){
 
                         acceptButton.addEventListener('click', function(){
                             const roleIn = document.getElementById('roles');
-                            fetch(`http://localhost:3000/api/admin/changeRole`, {
+                            fetch(`https://orderingsystem.azurewebsites.net/api/admin/changeRole`, {
                                 method: 'PUT',
                                 headers: {
                                     'Content-Type': 'application/json'
@@ -726,7 +726,7 @@ function createStaffCard(){
                         userCard.appendChild(deleteButton);
 
                         deleteButton.addEventListener('click', function(){
-                            fetch(`http://localhost:3000/api/admin/delete?email=${user.email}`, {
+                            fetch(`https://orderingsystem.azurewebsites.net/api/admin/delete?email=${user.email}`, {
                                 method: 'DELETE',
                                 headers: {
                                     'Content-Type': 'application/json'

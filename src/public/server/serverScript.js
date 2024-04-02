@@ -24,7 +24,7 @@ if (userName) {
 
 function start() {
     
-    fetch('http://localhost:3000/api/table/getAll')
+    fetch('https://orderingsystem.azurewebsites.net/api/table/getAll')
         .then(response => response.json())
         .then(data => {
 
@@ -80,7 +80,7 @@ function createWaitingTableElement(table){
     tableNumber.textContent = `Table ${table.number}`;
     tableDiv.appendChild(tableNumber);
 
-    fetch(`http://localhost:3000/api/order/get/table?tableNumber=${table.number}`)
+    fetch(`https://orderingsystem.azurewebsites.net/api/order/get/table?tableNumber=${table.number}`)
         .then(response=>{
             if (response.status == 200){
                 const tableOrder = document.createElement('div');
@@ -101,14 +101,14 @@ function createWaitingTableElement(table){
                         cancelOrderBtn.classList.add('cancel-order-btn'); 
                         tableOrder.appendChild(cancelOrderBtn);
                         cancelOrderBtn.addEventListener('click', function() {
-                            fetch(`http://localhost:3000/api/order/cancel?orderId=${res._id}`, {
+                            fetch(`https://orderingsystem.azurewebsites.net/api/order/cancel?orderId=${res._id}`, {
                                 method: 'PUT',
                                 headers: {
                                     'Content-Type': 'application/json'
                                 }
                             }).then(respond => {
                                 if (respond.status == 200){
-                                    fetch(`http://localhost:3000/api/table/empty?number=${table.number}`, {
+                                    fetch(`https://orderingsystem.azurewebsites.net/api/table/empty?number=${table.number}`, {
                                         method: 'PUT',
                                         headers: {
                                             'Content-Type': 'application/json'
@@ -152,7 +152,7 @@ function createWaitingTableElement(table){
                         tableDiv.appendChild(deliverOrderBtn);
 
                         deliverOrderBtn.addEventListener('click', function() {
-                            fetch(`http://localhost:3000/api/table/state?number=${table.number}`, {
+                            fetch(`https://orderingsystem.azurewebsites.net/api/table/state?number=${table.number}`, {
                                 method: 'PUT',
                                 headers: {
                                     'Content-Type': 'application/json'
@@ -254,7 +254,7 @@ function createOrderCard(table){
         const order = {table_number: table.number, order_items: orderItems};
 
 
-        fetch('http://localhost:3000/api/order/create ', {
+        fetch('https://orderingsystem.azurewebsites.net/api/order/create ', {
 
             method: 'POST',
             headers: {
@@ -266,7 +266,7 @@ function createOrderCard(table){
         .then(response => {
             if (response.status == 201) {
 
-                fetch(`http://localhost:3000/api/table/state?number=${table.number}`, {
+                fetch(`https://orderingsystem.azurewebsites.net/api/table/state?number=${table.number}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'
@@ -309,7 +309,7 @@ function createOrderCard(table){
         });
     })
 
-    fetch('http://localhost:3000/api/food/getBy?category=BEVERAGE')
+    fetch('https://orderingsystem.azurewebsites.net/api/food/getBy?category=BEVERAGE')
         .then(response => response.json())
         .then(data => {
             createFoodcard(data);
@@ -318,7 +318,7 @@ function createOrderCard(table){
 
     const beverageBtn = document.getElementById('beverageBtn');
     beverageBtn.addEventListener('click', function() {
-        fetch('http://localhost:3000/api/food/getBy?category=BEVERAGE')
+        fetch('https://orderingsystem.azurewebsites.net/api/food/getBy?category=BEVERAGE')
         .then(response => response.json())
         .then(data => {
             createFoodcard(data);
@@ -327,7 +327,7 @@ function createOrderCard(table){
 
     const appetizerBtn = document.getElementById('appetizerBtn');
     appetizerBtn.addEventListener('click', function() {
-        fetch('http://localhost:3000/api/food/getBy?category=APPETIZER')
+        fetch('https://orderingsystem.azurewebsites.net/api/food/getBy?category=APPETIZER')
         .then(response => response.json())
         .then(data => {
             createFoodcard(data);
@@ -336,7 +336,7 @@ function createOrderCard(table){
 
     const foodBtn = document.getElementById('foodBtn');
     foodBtn.addEventListener('click', function() {
-        fetch('http://localhost:3000/api/food/getBy?category=FOOD')
+        fetch('https://orderingsystem.azurewebsites.net/api/food/getBy?category=FOOD')
         .then(response => response.json())
         .then(data => {
             createFoodcard(data);
@@ -345,7 +345,7 @@ function createOrderCard(table){
 
     const dessertBtn = document.getElementById('dessertBtn');
     dessertBtn.addEventListener('click', function() {
-        fetch('http://localhost:3000/api/food/getBy?category=DESSERT')
+        fetch('https://orderingsystem.azurewebsites.net/api/food/getBy?category=DESSERT')
         .then(response => response.json())
         .then(data => {
             createFoodcard(data);
