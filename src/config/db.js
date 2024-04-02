@@ -15,7 +15,6 @@ module.exports = {
       })
       .catch((err) => {
         console.error(`Error connecting to the database. n${err}`);
-        db.connect(uri);
       });
   },
 };
