@@ -215,7 +215,6 @@ function createFoodCard(){
         })
         foods.appendChild(foodCard);
     })
-    fetch('http://localhost:8080/api/food/getAll')
     fetch('https://orderingsystem.azurewebsites.net/api/food/getAll')
     .then(response => {
         if(response.status == 200){
