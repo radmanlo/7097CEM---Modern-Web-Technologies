@@ -14,7 +14,8 @@ const app = express()
 const cookieParser = require('cookie-parser');
 
 const uri = process.env.DATABASE_URI;
-const port = process.env.NODE_LOCAL_PORT;
+const port = process.env.port || 8080;
+// const port = process.env.NODE_LOCAL_PORT;
 
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
