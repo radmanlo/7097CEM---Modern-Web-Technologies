@@ -163,10 +163,11 @@ function createWaitingTableElement(table){
 
                     }
                     else if(res.state == 'PREPARING'){
+                        console.log("I am pending!")
                         tableDiv.style.backgroundColor=`rgb(170, 232, 255)`;
                     }
                     else if (res.state == 'READY'){
-
+                        console.log("I am ready!")
                         tableDiv.style.backgroundColor=`rgb(148, 250, 134)`;
 
                         const deliverOrderBtn = document.createElement('button');

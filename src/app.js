@@ -36,7 +36,7 @@ app.get('/', function(req, res){
 
 app.get('/signout', function(req, res) {
   res.clearCookie('token', { httpOnly: true });
-  res.sendFile(path.join(__dirname, 'public/signup/signup.html'));
+  res.sendFile(path.join(__dirname, 'public/signup/signup.html')); 
 });
 
 if (process.env.NODE_ENV !== 'test') {
